@@ -24,8 +24,8 @@
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
-(setq doom-font (font-spec :family "Iosevka Curly" :size 17)
-      doom-variable-pitch-font (font-spec :family "Iosevka Curly" :size 17))
+(setq doom-font (font-spec :family "Iosevka Curly" :size 21)
+      doom-variable-pitch-font (font-spec :family "Iosevka Curly" :size 21))
 
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -79,3 +79,16 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Zig
+(use-package! zig-mode
+  :hook ((zig-mode . lsp-deferred))
+  :custom (zig-format-on-save nil)
+  :config
+  (after! lsp-mode
+    (add-to-list 'lsp-language-id-configuration '(zig-mode . "zig"))
+    (lsp-register-client
+      (make-lsp-client
+        :new-connection (lsp-stdio-connection "~/code/zig/bin/tools/zls")
+        :major-modes '(zig-mode)
+        :server-id 'zls))))
